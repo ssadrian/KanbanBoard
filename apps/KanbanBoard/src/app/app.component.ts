@@ -14,7 +14,7 @@ export class AppComponent {
   tasks: ITask[];
 
   constructor() {
-    const tareasJSON: string = `[
+    const tasksJson: string = `[
         {
           "taskType": "${(TaskType.FINALIZED)}",
           "img": "https://picsum.photos/300/200",
@@ -55,10 +55,24 @@ export class AppComponent {
         }
       ]`;
 
-    this.tasks = JSON.parse(tareasJSON);
+    this.tasks = JSON.parse(tasksJson);
 
     this.taskTypes.push(TaskType.TODO);
     this.taskTypes.push(TaskType.IN_PROGRESS);
     this.taskTypes.push(TaskType.FINALIZED);
+  }
+
+  getTasksOfType(taskType: TaskType): ITask[] {
+    let tasks: ITask[] = [];
+
+    for (let task of this.tasks) {
+      if (task.taskType !== taskType) {
+        continue;
+      }
+
+      tasks.push(task);
+    }
+
+    return tasks;
   }
 }

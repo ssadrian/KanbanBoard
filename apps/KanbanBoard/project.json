@@ -1,0 +1,93 @@
+{
+  "projectType": "application",
+  "generators": {},
+  "sourceRoot": "apps/KanbanBoard/src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/KanbanBoard",
+        "index": "apps/KanbanBoard/src/index.html",
+        "main": "apps/KanbanBoard/src/main.ts",
+        "polyfills": "apps/KanbanBoard/src/polyfills.ts",
+        "tsConfig": "apps/KanbanBoard/tsconfig.app.json",
+        "assets": [
+          "apps/KanbanBoard/src/favicon.ico",
+          "apps/KanbanBoard/src/assets"
+        ],
+        "styles": [
+          "apps/KanbanBoard/src/styles.css"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/KanbanBoard/src/environments/environment.ts",
+              "with": "apps/KanbanBoard/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "KanbanBoard:build:production"
+        },
+        "development": {
+          "browserTarget": "KanbanBoard:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "KanbanBoard:build"
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "apps/KanbanBoard/src/test.ts",
+        "polyfills": "apps/KanbanBoard/src/polyfills.ts",
+        "tsConfig": "apps/KanbanBoard/tsconfig.spec.json",
+        "karmaConfig": "apps/KanbanBoard/karma.conf.js",
+        "assets": [
+          "apps/KanbanBoard/src/favicon.ico",
+          "apps/KanbanBoard/src/assets"
+        ],
+        "styles": [
+          "apps/KanbanBoard/src/styles.css"
+        ],
+        "scripts": []
+      }
+    }
+  }
+}
