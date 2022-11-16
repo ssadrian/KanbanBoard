@@ -9,8 +9,9 @@
         *ngFor="let task of getTasksOfType(taskType)"
         [image]="task.img"
         [title]="task.title"
-        [deadline]="task.deadline"
+        [deadline]="task.deadline?.toString()"
         [assignedUsers]="task.users"
+        [taskType]="task.taskType"
       ></task-card>
     </div>
   </div>

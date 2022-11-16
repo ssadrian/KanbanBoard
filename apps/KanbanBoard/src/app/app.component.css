@@ -1,0 +1,21 @@
+.board-container {
+  display: flex;
+  align-content: center;
+  column-gap: 2rem;
+}
+
+.board-title {
+  text-align: center;
+}
+
+.board {
+  background-color: gray;
+  padding: 1rem;
+  border-radius: 25px;
+  flex: 1;
+}
+
+.board-tasks {
+  position: relative;
+  left: 25%;
+}

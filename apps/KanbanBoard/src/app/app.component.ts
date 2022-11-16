@@ -17,17 +17,17 @@ export class AppComponent {
     const tasksJson: string = `[
         {
           "taskType": "${(TaskType.FINALIZED)}",
-          "img": "https://picsum.photos/300/200",
+          "img": "./assets/769-200x300.jpg",
           "title": "Tarea 1: Diseño UI",
           "users": [{
-            "img": "https://picsum.photos/300/300",
+            "img": "./assets/48-300x300.jpg",
             "alt": "Usuario"
           }],
           "deadline": "2019-01-16"
         },
         {
           "taskType": "${(TaskType.IN_PROGRESS)}",
-          "img": "https://picsum.photos/300/200",
+          "img": "./assets/568-200x300.jpg",
           "title": "Tarea 2: Diseño de todo el Backend",
           "users": [],
           "deadline": "2022-11-09"
@@ -37,11 +37,11 @@ export class AppComponent {
           "img": null,
           "title": "Tarea 3: Diseño de la base de datos",
           "users":[{
-            "img": "https://picsum.photos/300/300",
+            "img": "./assets/52-300x300.jpg",
             "alt": "Usuario"
           },
           {
-            "img": "https://picsum.photos/300/300",
+            "img": "./assets/737-300x300.jpg",
             "alt": "Usuario"
           }],
           "deadline": "2022-11-16"
