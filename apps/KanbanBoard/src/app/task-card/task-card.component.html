@@ -6,15 +6,18 @@
   <div class="title" [innerText]="title"></div>
 
   <div class="task-footer">
-    <div class="deadline" *ngIf="deadline">
-      <span class="icon">⏳</span>
-      <span [innerText]="deadline"></span>
+    <div class="deadline rounded-1"
+         *ngIf="deadline"
+         [ngClass]="deadlineType">
+      <span class="clock-icon"></span>
+      <span [innerText]="deadline.toLocaleDateString()"></span>
     </div>
 
     <div class="assigned-users" *ngIf="assignedUsers">
-      <div class="user-img" *ngFor="let user of assignedUsers">
-        <img [src]="user.img" [alt]="user.alt">
-      </div>
+      <img class="user-img"
+           *ngFor="let user of assignedUsers"
+           [src]="user.img"
+           [alt]="user.alt">
     </div>
   </div>
 </div>

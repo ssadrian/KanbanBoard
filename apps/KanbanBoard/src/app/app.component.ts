@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {ITask} from "./models/task/itask";
-import {TaskType} from "./models/task-type/task-type";
+import { Component } from "@angular/core";
+import { ITask } from "./models/task/itask";
+import { TaskType } from "./models/task-type/task-type";
 
 @Component({
   selector: "app-root",
@@ -30,7 +30,7 @@ export class AppComponent {
           "img": "./assets/568-200x300.jpg",
           "title": "Tarea 2: Diseño de todo el Backend",
           "users": [],
-          "deadline": "2022-11-09"
+          "deadline": "${new Date(new Date().setDate(new Date().getDate() + 1))}"
         },
         {
           "taskType": "${(TaskType.TODO)}",
@@ -56,6 +56,15 @@ export class AppComponent {
       ]`;
 
     this.tasks = JSON.parse(tasksJson);
+
+    this.tasks.forEach((task: ITask): void => {
+      task.deadline = new Date(task.deadline?.toString() ?? "");
+
+      // Invalid dates are marked with 'Invalid date' on console.log
+      if (isNaN(task.deadline.getDate())) {
+        task.deadline = undefined;
+      }
+    });
 
     this.taskTypes.push(TaskType.TODO);
     this.taskTypes.push(TaskType.IN_PROGRESS);

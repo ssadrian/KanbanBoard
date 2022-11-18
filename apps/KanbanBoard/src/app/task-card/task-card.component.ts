@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { IUser } from "../models/user/user";
 import { TaskType } from "../models/task-type/task-type";
+import { DeadlineType } from "../models/deadline-type";
 
 @Component({
   selector: "task-card",
@@ -9,28 +10,46 @@ import { TaskType } from "../models/task-type/task-type";
 })
 export class TaskCardComponent implements OnInit {
   @Input() title?: string;
-  @Input() deadline?: string;
+  @Input() deadline?: Date;
   @Input() image?: string;
   @Input() assignedUsers?: IUser[];
 
   @Input() taskType?: TaskType;
 
-  isFinished?: boolean;
+  deadlineType?: DeadlineType;
 
   constructor() {
+    this.deadlineType = DeadlineType.DEFAULT;
   }
 
   ngOnInit(): void {
-    this.isFinished = this.getDaysUntilDeadline() >= 0;
+    let daysUntilDeadline: number = this.getDaysUntilDeadline();
+
+    let isDeadlineExceeded: boolean = daysUntilDeadline <= 0;
+    let isTaskInFinishedBoard: boolean = this.taskType == TaskType.FINALIZED;
+
+    let isOneDayLeftUntilDeadline: boolean = this.deadline?.getDay() == (new Date().getDay() + 1);
+
+    if (isTaskInFinishedBoard) {
+      if (isDeadlineExceeded) {
+        this.deadlineType = DeadlineType.FINISHED;
+      } else {
+        this.deadlineType = DeadlineType.MISSED;
+      }
+    } else if (isOneDayLeftUntilDeadline) {
+      this.deadlineType = DeadlineType.CLOSE_BY;
+    }
   }
 
   getDaysUntilDeadline(): number {
     let leftDays: number = -1;
     let today: Date = new Date();
-    let deadline: Date = new Date(Date.parse(this.deadline ?? ""));
 
-    // BUG: Diff between 2019 and 2022 should be negative and diff between 2022 and 2023 should be positive
-    leftDays = Math.round((today.getTime() - deadline.getTime()) / (1000 * 60 * 60 * 24)) - 1;
+    if (this.deadline === undefined) {
+      return 0;
+    }
+
+    leftDays = Math.round((this.deadline.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
     return leftDays;
   }
 }

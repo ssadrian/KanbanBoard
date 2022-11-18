@@ -1,4 +1,54 @@
-.task-finished-uncompleted {}
-.task-finished-completed {}
-.task-unfinished-uncompleted {}
-.task-unfinished-completed {}
+.clock-icon::before {
+  content: "⏳";
+}
+
+.task-finished-uncompleted {
+  background-color: #e70002;
+}
+
+.task-finished-completed {
+  background-color: green;
+}
+
+.task-close-by-uncompleted {
+  background-color: #f6a606;
+}
+
+.task-default {
+  background-color: #7f7f7f;
+}
+
+.task {
+  background-color: #fbe4c5;
+}
+
+.deadline {
+  padding: 5px;
+}
+
+.task {
+  padding: 10px;
+}
+
+.title {
+  margin-bottom: 1rem;
+}
+
+.task-footer,
+.assigned-users {
+  display: flex;
+}
+
+.task-footer {
+  justify-content: space-between;
+}
+
+.assigned-users {
+  width: 2rem;
+  height: 2rem;
+  column-gap: 1rem;
+}
+
+.user-img {
+  border-radius: 50%;
+}

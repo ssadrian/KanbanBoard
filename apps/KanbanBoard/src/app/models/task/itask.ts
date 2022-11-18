@@ -1,5 +1,5 @@
-import {IUser} from "../user/user";
-import {TaskType} from "../task-type/task-type";
+import { IUser } from "../user/user";
+import { TaskType } from "../task-type/task-type";
 
 export interface ITask {
   taskType: TaskType;

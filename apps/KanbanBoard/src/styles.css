@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --base-radius: .5rem;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.rounded-0 {
+  border-radius: 0;
+}
+
+.rounded-1 {
+  border-radius: calc(var(--base-radius));
+}
+
+.rounded-2 {
+  border-radius: calc(var(--base-radius) * 1.375);
+}
+
+.rounded-3 {
+  border-radius: calc(var(--base-radius) * 1.75);
+}
+
+.rounded-4 {
+  border-radius: calc(var(--base-radius) * 2.125);
+}
+
+.rounded-5 {
+  border-radius: calc(var(--base-radius) * 2.5);
+}

@@ -1,5 +1,5 @@
 <div class="board-container">
-  <div class="board" *ngFor="let taskType of taskTypes">
+  <div class="board rounded-5" *ngFor="let taskType of taskTypes">
     <div class="board-header">
       <h1 class="board-title" [innerText]="taskType"></h1>
     </div>
@@ -9,10 +9,10 @@
         *ngFor="let task of getTasksOfType(taskType)"
         [image]="task.img"
         [title]="task.title"
-        [deadline]="task.deadline?.toString()"
+        [deadline]="task.deadline"
         [assignedUsers]="task.users"
-        [taskType]="task.taskType"
-      ></task-card>
+        [taskType]="task.taskType">
+      </task-card>
     </div>
   </div>
 </div>
