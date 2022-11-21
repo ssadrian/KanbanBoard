@@ -2,10 +2,6 @@
   --base-radius: .5rem;
 }
 
-body {
-  overflow-x: hidden;
-}
-
 .rounded-0 {
   border-radius: 0;
 }

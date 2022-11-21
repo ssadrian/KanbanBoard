@@ -5,12 +5,12 @@
 
   <div class="title" [innerText]="title"></div>
 
-  <div class="task-footer">
+  <div class="task-footer" *ngIf="deadline && assignedUsers">
     <div class="deadline rounded-1"
          *ngIf="deadline"
          [ngClass]="deadlineType">
       <span class="clock-icon"></span>
-      <span [innerText]="deadline.toLocaleDateString()"></span>
+      <span class="date" [innerText]="deadline.toLocaleDateString()"></span>
     </div>
 
     <div class="assigned-users" *ngIf="assignedUsers">
