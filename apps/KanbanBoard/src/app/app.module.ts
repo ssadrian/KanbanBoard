@@ -5,14 +5,9 @@ import { AppComponent } from './app.component';
 import { TaskCardComponent } from './task-card/task-card.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TaskCardComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
+  declarations: [AppComponent, TaskCardComponent],
+  imports: [BrowserModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

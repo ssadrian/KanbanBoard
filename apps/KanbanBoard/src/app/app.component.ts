@@ -5,64 +5,74 @@ import { TaskType } from "./models/task-type/task-type";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
   title: string = "Kanban Board";
+
+  #k_PENDIENTES_LISTA: string = TaskType.TODO;
+  #k_PROGRESO_LISTA: string = TaskType.IN_PROGRESS;
+  #k_FINALIZADAS_LISTA: string = TaskType.FINALIZED;
 
   taskTypes: TaskType[] = [];
   tasks: ITask[];
 
   constructor() {
-    const tasksJson: string = `[
+    const tasksJson: string = `{
+  "tareas": [
+    {
+      "lista": "${this.#k_FINALIZADAS_LISTA}",
+      "img": "https://picsum.photos/300/200",
+      "titulo": "Tarea 1: Diseño UI",
+      "usuarios": [
         {
-          "taskType": "${(TaskType.FINALIZED)}",
-          "img": "./assets/769-200x300.jpg",
-          "title": "Tarea 1: Diseño UI",
-          "users": [{
-            "img": "./assets/48-300x300.jpg",
-            "alt": "Usuario"
-          }],
-          "deadline": "2019-01-16"
-        },
-        {
-          "taskType": "${(TaskType.IN_PROGRESS)}",
-          "img": "./assets/568-200x300.jpg",
-          "title": "Tarea 2: Diseño de todo el Backend",
-          "users": [],
-          "deadline": "${new Date(new Date().setDate(new Date().getDate() + 1))}"
-        },
-        {
-          "taskType": "${(TaskType.TODO)}",
-          "img": null,
-          "title": "Tarea 3: Diseño de la base de datos",
-          "users":[{
-            "img": "./assets/52-300x300.jpg",
-            "alt": "Usuario"
-          },
-          {
-            "img": "./assets/737-300x300.jpg",
-            "alt": "Usuario"
-          }],
-          "deadline": "2022-11-16"
-        },
-        {
-          "taskType": "${(TaskType.TODO)}",
-          "img": null,
-          "title": "Tarea 4: Implementar todo el Front-End",
-          "users": [],
-          "deadline": null
+          "img": "https://picsum.photos/300/300",
+          "alt": "Usuario"
         }
-      ]`;
+      ],
+      "fechaFin": "2019-01-16"
+    },
+    {
+      "lista": "${this.#k_PROGRESO_LISTA}",
+      "img": "https://picsum.photos/300/200",
+      "titulo": "Tarea 2: Diseño de todo el Backend",
+      "usuarios": [],
+      "fechaFin": "2022-11-09"
+    },
+    {
+      "lista": "${this.#k_PENDIENTES_LISTA}",
+      "img": null,
+      "titulo": "Tarea 3: Diseño de la base de datos",
+      "usuarios": [
+        {
+          "img": "https://picsum.photos/300/300",
+          "alt": "Usuario"
+        },
+        {
+          "img": "https://picsum.photos/300/300",
+          "alt": "Usuario"
+        }
+      ],
+      "fechaFin": "2022-11-16"
+    },
+    {
+      "lista": "${this.#k_PENDIENTES_LISTA}",
+      "img": null,
+      "titulo": "Tarea 4: Implementar todo el Front-End",
+      "usuarios": [],
+      "fechaFin": null
+    }
+  ]
+}`;
 
-    this.tasks = JSON.parse(tasksJson);
+    this.tasks = JSON.parse(tasksJson)["tareas"];
 
-    this.tasks.forEach((task: ITask): void => {
-      task.deadline = new Date(task.deadline?.toString() ?? "");
+    this.tasks.forEach((task) => {
+      task.fechaFin = new Date(task.fechaFin?.toString() ?? "");
 
       // Invalid dates are marked with 'Invalid date' on console.log
-      if (isNaN(task.deadline.getDate())) {
-        task.deadline = undefined;
+      if (isNaN(task.fechaFin.getDate())) {
+        task.fechaFin = undefined;
       }
     });
 
@@ -75,7 +85,7 @@ export class AppComponent {
     let tasks: ITask[] = [];
 
     for (let task of this.tasks) {
-      if (task.taskType !== taskType) {
+      if (task.lista !== taskType) {
         continue;
       }
 

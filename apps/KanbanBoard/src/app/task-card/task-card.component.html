@@ -1,6 +1,7 @@
 <div class="task">
-  <div class="header-image">
-    <img [src]="image" [alt]="image ? 'Header Image' : ''">
+  <div class="task-header-image"
+       *ngIf="image"
+       [style.background-image]="'url(' + image + ')'">
   </div>
 
   <div class="title" [innerText]="title"></div>
@@ -8,7 +9,8 @@
   <div class="task-footer" *ngIf="deadline && assignedUsers">
     <div class="deadline rounded-1"
          *ngIf="deadline"
-         [ngClass]="deadlineType">
+         [ngClass]="deadlineType"
+    >
       <span class="clock-icon"></span>
       <span class="date" [innerText]="deadline.toLocaleDateString()"></span>
     </div>
@@ -16,8 +18,10 @@
     <div class="assigned-users" *ngIf="assignedUsers">
       <img class="user-img"
            *ngFor="let user of assignedUsers"
-           [src]="user.img"
-           [alt]="user.alt">
+           [src]="user.img" [alt]="user.alt"
+      >
     </div>
   </div>
 </div>
+
+<div class="glow"></div>

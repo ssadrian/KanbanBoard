@@ -8,10 +8,10 @@
       <task-card
         *ngFor="let task of getTasksOfType(taskType)"
         [image]="task.img"
-        [title]="task.title"
-        [deadline]="task.deadline"
-        [assignedUsers]="task.users"
-        [taskType]="task.taskType">
+        [title]="task.titulo"
+        [deadline]="task.fechaFin"
+        [assignedUsers]="task.usuarios"
+        [taskType]="task.lista">
       </task-card>
     </div>
   </div>

@@ -1,3 +1,7 @@
+:host {
+  --board-background: #EBE7E3;
+}
+
 .board-container {
   display: flex;
   column-gap: 2rem;
@@ -9,7 +13,7 @@
 }
 
 .board {
-  background-color: #ebe7e2;
+  background-color: var(--board-background);
   padding: 1rem;
   flex: 1;
 }
@@ -18,16 +22,4 @@
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
-}
-
-task-card {
-  --bg-color: rgba(12, 12, 12, .75);
-  box-shadow: 5px 5px 25px 5px var(--bg-color);
-  transition: box-shadow 150ms ease;
-}
-
-task-card:hover {
-  transition: box-shadow 150ms ease;
-  cursor: pointer;
-  box-shadow: 5px 5px 27px .1rem var(--bg-color);
 }

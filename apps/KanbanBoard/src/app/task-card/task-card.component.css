@@ -1,35 +1,44 @@
+:host {
+  --red: #EE005F;
+  --green: #00EA71;
+  --orange: #FFA953;
+  --light-grey: #9A97A9;
+  --beige: #FFEDCB;
+  --underline-rgba: rgba(30, 30, 30, .75);
+}
+
 .clock-icon::before {
   content: "⏳";
 }
 
 .task-finished-uncompleted {
-  background-color: #e70002;
+  background-color: var(--red);
 }
 
 .task-finished-completed {
-  background-color: green;
+  background-color: var(--green);
 }
 
 .task-close-by-uncompleted {
-  background-color: #f6a606;
+  background-color: var(--orange);
 }
 
 .task-default {
-  background-color: #7f7f7f;
+  background-color: var(--light-grey);
 }
 
 .task {
-  background-color: #fbe4c5;
-  border-radius: 50%;
+  background-color: var(--beige);
+  padding: 20px;
+  border-radius: 10px;
+  border-bottom-color: transparent;
+  box-shadow: 0 -1px 10px 1px var(--underline-rgba);
 }
 
-.header-image > img {
-  background-size: cover;
+.task-header-image {
+  margin: -1.25rem -1.25rem 0 -1.25rem;
   border-radius: 7px 7px 0 0;
-  margin: -10px 0;
-  position: relative;
-  width: 100%;
-  height: 50px;
+  height: 3.5rem;
 }
 
 .deadline {
@@ -41,13 +50,10 @@
   align-self: center;
 }
 
-.task {
-  padding: 10px;
-  border-radius: 10px;
-}
-
 .title {
   margin: 1rem 0;
+  font-weight: bold;
+  font-size: 1.25rem;
 }
 
 .task-footer,
@@ -69,4 +75,23 @@
 
 .user-img {
   border-radius: 50%;
+}
+
+.glow {
+  position: relative;
+  bottom: 10px;
+  height: 10px;
+  width: 0;
+  border-radius: 0 0 10px 10px;
+  background-color: var(--underline-rgba);
+}
+
+.task:hover ~ .glow {
+  animation: underline 550ms ease-out forwards;
+}
+
+@keyframes underline {
+  100% {
+    width: 100%;
+  }
 }
