@@ -86,6 +86,10 @@
   background-color: var(--underline-rgba);
 }
 
+.task:hover {
+  cursor: pointer;
+}
+
 .task:hover ~ .glow {
   animation: underline 550ms ease-out forwards;
 }

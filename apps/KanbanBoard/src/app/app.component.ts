@@ -1,71 +1,82 @@
 import { Component } from "@angular/core";
 import { ITask } from "./models/task/itask";
 import { TaskType } from "./models/task-type/task-type";
+import { IUser } from "./models/user/user";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"],
+  styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
   title: string = "Kanban Board";
 
-  #k_PENDIENTES_LISTA: string = TaskType.TODO;
-  #k_PROGRESO_LISTA: string = TaskType.IN_PROGRESS;
-  #k_FINALIZADAS_LISTA: string = TaskType.FINALIZED;
+  private k_PENDIENTES_LISTA: string = TaskType.TODO;
+  private k_PROGRESO_LISTA: string = TaskType.IN_PROGRESS;
+  private k_FINALIZADAS_LISTA: string = TaskType.FINALIZED;
 
   taskTypes: TaskType[] = [];
   tasks: ITask[];
 
-  constructor() {
-    const tasksJson: string = `{
-  "tareas": [
-    {
-      "lista": "${this.#k_FINALIZADAS_LISTA}",
-      "img": "https://picsum.photos/300/200",
-      "titulo": "Tarea 1: Diseño UI",
-      "usuarios": [
-        {
-          "img": "https://picsum.photos/300/300",
-          "alt": "Usuario"
-        }
-      ],
-      "fechaFin": "2019-01-16"
-    },
-    {
-      "lista": "${this.#k_PROGRESO_LISTA}",
-      "img": "https://picsum.photos/300/200",
-      "titulo": "Tarea 2: Diseño de todo el Backend",
-      "usuarios": [],
-      "fechaFin": "2022-11-09"
-    },
-    {
-      "lista": "${this.#k_PENDIENTES_LISTA}",
-      "img": null,
-      "titulo": "Tarea 3: Diseño de la base de datos",
-      "usuarios": [
-        {
-          "img": "https://picsum.photos/300/300",
-          "alt": "Usuario"
-        },
-        {
-          "img": "https://picsum.photos/300/300",
-          "alt": "Usuario"
-        }
-      ],
-      "fechaFin": "2022-11-16"
-    },
-    {
-      "lista": "${this.#k_PENDIENTES_LISTA}",
-      "img": null,
-      "titulo": "Tarea 4: Implementar todo el Front-End",
-      "usuarios": [],
-      "fechaFin": null
-    }
-  ]
-}`;
+  showTaskForm?: boolean;
+  taskFormData?: ITask;
 
-    this.tasks = JSON.parse(tasksJson)["tareas"];
+  constructor() {
+    const tareasJSON: string = `{
+      "tareas": [{
+        "id": 0,
+        "lista": "${this.k_FINALIZADAS_LISTA}",
+        "img": "https://picsum.photos/300/200",
+        "titulo": "Tarea 1: Diseño UI",
+        "usuarios": [{
+          "email": "lponts@ilerna.com",
+          "img": "https://picsum.photos/300/300",
+          "nick": "Juan",
+          "alt": "Usuario"
+        }],
+        "fechaFin": "2019-01-16"
+      },
+      {
+        "id": 1,
+        "lista": "${this.k_PROGRESO_LISTA}",
+        "img": "https://picsum.photos/300/200",
+        "titulo": "Tarea 2: Diseño de todo el Backend",
+        "usuarios": [],
+        "fechaFin": "2022-11-09"
+      },
+      {
+        "id": 2,
+        "lista": "${this.k_PENDIENTES_LISTA}",
+        "img": null,
+        "titulo": "Tarea 3: Diseño de la base de datos",
+        "usuarios":
+        [
+          {
+            "email": "jdominguez@ilerna.com",
+            "img": "https://picsum.photos/200/200",
+            "nick": "Jose",
+            "alt": "Usuario"
+          },
+          {
+            "email": "lponts@ilerna.com",
+            "img": "https://picsum.photos/100/100",
+            "nick": "Laura",
+            "alt": "Usuario"
+          }
+        ],
+        "fechaFin": "2022-11-16"
+      },
+      {
+        "id": 3,
+        "lista": "${this.k_PENDIENTES_LISTA}",
+        "img": null,
+        "titulo": "Tarea 4: Implementar todo el Front-End",
+        "usuarios": [],
+        "fechaFin": null
+      }
+    ]}`;
+
+    this.tasks = JSON.parse(tareasJSON)["tareas"];
 
     this.tasks.forEach((task) => {
       task.fechaFin = new Date(task.fechaFin?.toString() ?? "");
@@ -93,5 +104,39 @@ export class AppComponent {
     }
 
     return tasks;
+  }
+
+  #toggleTaskForm(): void {
+    this.showTaskForm = !this.showTaskForm;
+  }
+
+  addNewUserToTask(task: ITask): void {
+    task.usuarios.push({
+      img: "",
+      alt: "",
+      email: "",
+      nick: ""
+    });
+  }
+
+  removeUserFromTask(userToRemove: IUser, task: ITask): void {
+    for (let user of task.usuarios) {
+      if (
+        user.nick === userToRemove.nick &&
+        user.email === userToRemove.email
+      ) {
+        task.usuarios.splice(task.usuarios.indexOf(user), 1);
+      }
+    }
+  }
+
+  startTaskEdit(task: ITask) {
+    this.#toggleTaskForm();
+    this.taskFormData = task;
+  }
+
+  startEmptyTaskEdit() {
+    this.#toggleTaskForm();
+    this.taskFormData = undefined;
   }
 }

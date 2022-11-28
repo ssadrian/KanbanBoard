@@ -11,8 +11,18 @@
         [title]="task.titulo"
         [deadline]="task.fechaFin"
         [assignedUsers]="task.usuarios"
-        [taskType]="task.lista">
+        [taskType]="task.lista"
+        (click)="startTaskEdit(task)">
+      </task-card>
+
+      <task-card
+        [title]="'➕ Añadir tarea nueva...'"
+        (click)="startEmptyTaskEdit()">
       </task-card>
     </div>
   </div>
+</div>
+
+<div class="task-form-container">
+
 </div>
