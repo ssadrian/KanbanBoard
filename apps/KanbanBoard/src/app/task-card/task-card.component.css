@@ -7,74 +7,24 @@
   --underline-rgba: rgba(30, 30, 30, .75);
 }
 
-.clock-icon::before {
-  content: "⏳";
-}
-
 .task-finished-uncompleted {
-  background-color: var(--red);
+  @apply bg-[var(--red)];
 }
 
 .task-finished-completed {
-  background-color: var(--green);
+  @apply bg-[var(--green)];
 }
 
 .task-close-by-uncompleted {
-  background-color: var(--orange);
+  @apply bg-[var(--orange)];
 }
 
 .task-default {
-  background-color: var(--light-grey);
+  @apply bg-[var(--light-grey)];
 }
 
 .task {
-  background-color: var(--beige);
-  padding: 20px;
-  border-radius: 10px;
-  border-bottom-color: transparent;
-  box-shadow: 0 -1px 10px 1px var(--underline-rgba);
-}
-
-.task-header-image {
-  margin: -1.25rem -1.25rem 0 -1.25rem;
-  border-radius: 7px 7px 0 0;
-  height: 3.5rem;
-}
-
-.deadline {
-  display: flex;
-  padding: 5px;
-}
-
-.date {
-  align-self: center;
-}
-
-.title {
-  margin: 1rem 0;
-  font-weight: bold;
-  font-size: 1.25rem;
-}
-
-.task-footer,
-.assigned-users {
-  display: flex;
-}
-
-.task-footer {
-  justify-content: space-between;
-}
-
-.assigned-users {
-  display: flex;
-  justify-content: flex-end;
-  height: 2rem;
-  width: 0;
-  column-gap: 1rem;
-}
-
-.user-img {
-  border-radius: 50%;
+  @apply bg-[var(--beige)];
 }
 
 .glow {

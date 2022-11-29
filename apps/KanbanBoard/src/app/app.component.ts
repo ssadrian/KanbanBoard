@@ -6,7 +6,7 @@ import { IUser } from "./models/user/user";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
   title: string = "Kanban Board";
@@ -115,7 +115,7 @@ export class AppComponent {
       img: "",
       alt: "",
       email: "",
-      nick: ""
+      nick: "",
     });
   }
 

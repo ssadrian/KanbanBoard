@@ -1,7 +1,7 @@
-<div class="board-container">
-  <div class="board rounded-5" *ngFor="let taskType of taskTypes">
-    <div class="board-header">
-      <h1 class="board-title" [innerText]="taskType"></h1>
+<div class="flex gap-8 board-container">
+  <div class="p-4 flex-1 bg-stone-300 board" *ngFor="let taskType of taskTypes">
+    <div class="mb-4 board-header">
+      <h1 class="text-center font-bold board-title" [innerText]="taskType"></h1>
     </div>
 
     <div class="board-tasks">
@@ -24,5 +24,4 @@
 </div>
 
 <div class="task-form-container">
-
 </div>
