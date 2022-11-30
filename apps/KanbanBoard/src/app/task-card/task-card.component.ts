@@ -28,7 +28,7 @@ export class TaskCardComponent implements OnInit {
     let isDeadlineExceeded: boolean = daysUntilDeadline <= 0;
     let isTaskInFinishedBoard: boolean = this.taskType == TaskType.FINALIZED;
 
-    let isOneDayLeftUntilDeadline: boolean = this.deadline?.getDay() == (new Date().getDay() + 1);
+    let isOneDayLeftUntilDeadline: boolean = daysUntilDeadline == 1;
 
     if (isTaskInFinishedBoard) {
       if (isDeadlineExceeded) {
@@ -49,7 +49,9 @@ export class TaskCardComponent implements OnInit {
       return 0;
     }
 
-    leftDays = Math.round((this.deadline.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    leftDays = Math.round(
+      (this.deadline.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+    );
     return leftDays;
   }
 }
