@@ -1,4 +1,4 @@
-<div class="p-5 rounded-xl shadow-2xl task">
+<div class="p-5 rounded-xl shadow-2xl hover:cursor-pointer task">
   <div class="-mt-5 -mx-5 rounded-t-xl h-14 task-header-image"
        *ngIf="image"
        [style.background-image]="'url(' + image + ')'">
@@ -23,10 +23,10 @@
     <div class="flex justify-end h-8 gap-4 assigned-users" *ngIf="assignedUsers">
       <img class="rounded-full user-img"
            *ngFor="let user of assignedUsers"
-           [src]="user.img" [alt]="user.alt"
+           [src]="user.img" [alt]="user.alt" [matTooltip]="user.alt"
       >
     </div>
   </div>
 </div>
 
-<div class="glow"></div>
+<div class="relative bottom-2.5 h-2.5 w-0 rounded-b-xl glow"></div>

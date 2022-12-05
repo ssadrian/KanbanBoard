@@ -1,4 +1,6 @@
 import { Component } from "@angular/core";
+import { FormBuilder } from '@angular/forms'
+
 import { ITask } from "./models/task/itask";
 import { TaskType } from "./models/task-type/task-type";
 import { IUser } from "./models/user/user";
@@ -16,12 +18,18 @@ export class AppComponent {
   private k_FINALIZADAS_LISTA: string = TaskType.FINALIZED;
 
   taskTypes: TaskType[] = [];
+
   tasks: ITask[];
 
   showTaskForm?: boolean;
-  taskFormData?: ITask;
+  taskFormGroup = this.fb.group({
+    title: [""],
+    taskType: [""],
+    deadline: [""],
+    headerImage: ["https://lorempicsum.com/300/200"]
+  });
 
-  constructor() {
+  constructor(private fb: FormBuilder) {
     const tareasJSON: string = `{
       "tareas": [{
         "id": 0,
@@ -132,11 +140,9 @@ export class AppComponent {
 
   startTaskEdit(task: ITask) {
     this.#toggleTaskForm();
-    this.taskFormData = task;
   }
 
   startEmptyTaskEdit() {
     this.#toggleTaskForm();
-    this.taskFormData = undefined;
   }
 }

@@ -28,16 +28,7 @@
 }
 
 .glow {
-  position: relative;
-  bottom: 10px;
-  height: 10px;
-  width: 0;
-  border-radius: 0 0 10px 10px;
-  background-color: var(--underline-rgba);
-}
-
-.task:hover {
-  cursor: pointer;
+  @apply bg-[var(--underline-rgba)];
 }
 
 .task:hover ~ .glow {

@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
+
+import { ITask } from "../models/task/itask"
 import { IUser } from "../models/user/user";
 import { TaskType } from "../models/task-type/task-type";
 import { DeadlineType } from "../models/deadline-type";
@@ -9,12 +11,13 @@ import { DeadlineType } from "../models/deadline-type";
   styleUrls: ["./task-card.component.css"],
 })
 export class TaskCardComponent implements OnInit {
+  @Input() task?: ITask;
   @Input() title?: string;
-  @Input() deadline?: Date;
-  @Input() image?: string;
-  @Input() assignedUsers?: IUser[];
 
-  @Input() taskType?: TaskType;
+  deadline?: Date;
+  image?: string;
+  assignedUsers?: IUser[];
+  taskType?: TaskType;
 
   deadlineType?: DeadlineType;
 
@@ -23,6 +26,15 @@ export class TaskCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.task) {
+      this.title = this.task.titulo;
+    }
+
+    this.deadline = this.task?.fechaFin;
+    this.image = this.task?.img;
+    this.assignedUsers = this.task?.usuarios;
+    this.taskType = this.task?.lista;
+
     let daysUntilDeadline: number = this.getDaysUntilDeadline();
 
     let isDeadlineExceeded: boolean = daysUntilDeadline <= 0;

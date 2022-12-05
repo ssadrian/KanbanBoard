@@ -1,27 +1,67 @@
-<div class="flex gap-8 board-container">
-  <div class="p-4 flex-1 bg-stone-300 board" *ngFor="let taskType of taskTypes">
+<div class="flex gap-8 m-2 board-container">
+  <div
+    class="p-4 flex-1 bg-stone-300 rounded-xl board"
+    *ngFor="let taskType of taskTypes"
+  >
     <div class="mb-4 board-header">
-      <h1 class="text-center font-bold board-title" [innerText]="taskType"></h1>
+      <h1
+        class="text-center font-bold text-4xl board-title"
+        [innerText]="taskType"
+      ></h1>
     </div>
 
     <div class="board-tasks">
       <task-card
         *ngFor="let task of getTasksOfType(taskType)"
-        [image]="task.img"
-        [title]="task.titulo"
-        [deadline]="task.fechaFin"
-        [assignedUsers]="task.usuarios"
-        [taskType]="task.lista"
-        (click)="startTaskEdit(task)">
+        [task]="task"
+        (click)="startTaskEdit(task)"
+      >
       </task-card>
 
       <task-card
         [title]="'➕ Añadir tarea nueva...'"
-        (click)="startEmptyTaskEdit()">
+        (click)="startEmptyTaskEdit()"
+      >
       </task-card>
     </div>
   </div>
 </div>
 
 <div class="task-form-container">
+  <p [innerText]="taskFormGroup.value | json"></p>
+
+  <form [formGroup]="taskFormGroup">
+    <mat-form-field appearance="fill">
+      <mat-label>Titulo</mat-label>
+
+      <input matInput formControlName="title" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Lista</mat-label>
+
+      <input matInput formControlName="taskType" [matAutocomplete]="auto" />
+
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let taskType of taskTypes" [value]="taskType">
+          {{ taskType }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha fin</mat-label>
+
+      <input type="date" matInput formControlName="deadline" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>URL Imagen</mat-label>
+
+      <input matInput formControlName="headerImage" />
+    </mat-form-field>
+
+    <button type="submit" mat-flat-button color="accent">Guardar</button>
+    <button type="reset" mat-stroked-button color="warn">Eliminar</button>
+  </form>
 </div>
