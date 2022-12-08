@@ -24,9 +24,10 @@ export class AppComponent {
   showTaskForm?: boolean;
   taskFormGroup = this.fb.group({
     title: [""],
-    taskType: [""],
-    deadline: [""],
-    headerImage: ["https://lorempicsum.com/300/200"]
+    taskType: [TaskType.TODO],
+    deadline: [new Date()],
+    headerImage: ["https://lorempicsum.com/300/200"],
+    users: []
   });
 
   constructor(private fb: FormBuilder) {
@@ -114,13 +115,13 @@ export class AppComponent {
     return tasks;
   }
 
-  #toggleTaskForm(): void {
+  toggleTaskForm(): void {
     this.showTaskForm = !this.showTaskForm;
   }
 
   addNewUserToTask(task: ITask): void {
     task.usuarios.push({
-      img: "",
+      img: "https://picsum.photos/200/300",
       alt: "",
       email: "",
       nick: "",
@@ -139,10 +140,31 @@ export class AppComponent {
   }
 
   startTaskEdit(task: ITask) {
-    this.#toggleTaskForm();
+    this.toggleTaskForm();
+    this.taskFormGroup.patchValue({
+      title: task.titulo,
+      taskType: task.lista,
+      deadline: task.fechaFin,
+      headerImage: task.img
+    });
   }
 
   startEmptyTaskEdit() {
-    this.#toggleTaskForm();
+    this.toggleTaskForm();
+    this.taskFormGroup.reset();
+  }
+
+  saveNewTask() {
+    this.toggleTaskForm();
+    this.tasks.push({
+      id: 0,
+      titulo: this.taskFormGroup.value.title!,
+      lista: this.taskFormGroup.value.taskType!,
+      img: this.taskFormGroup.value.headerImage!,
+      fechaFin: this.taskFormGroup.value.deadline!,
+      usuarios: this.taskFormGroup.value.users!
+    });
+
+    console.log(this.tasks.pop());
   }
 }

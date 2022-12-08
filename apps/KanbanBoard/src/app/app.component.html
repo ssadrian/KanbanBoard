@@ -1,4 +1,4 @@
-<div class="flex gap-8 m-2 board-container">
+<div class="flex gap-8 m-2 board-container" *ngIf="!showTaskForm">
   <div
     class="p-4 flex-1 bg-stone-300 rounded-xl board"
     *ngFor="let taskType of taskTypes"
@@ -27,10 +27,12 @@
   </div>
 </div>
 
-<div class="task-form-container">
-  <p [innerText]="taskFormGroup.value | json"></p>
-
-  <form [formGroup]="taskFormGroup">
+<div class="h-full task-form-container" *ngIf="showTaskForm">
+  <form
+    class="flex flex-col w-1/2 relative left-1/4 top-1/4"
+    [formGroup]="taskFormGroup"
+    (ngSubmit)="saveNewTask()"
+  >
     <mat-form-field appearance="fill">
       <mat-label>Titulo</mat-label>
 
@@ -61,7 +63,17 @@
       <input matInput formControlName="headerImage" />
     </mat-form-field>
 
-    <button type="submit" mat-flat-button color="accent">Guardar</button>
+    <button class="mb-10" type="submit" mat-flat-button color="accent">
+      Guardar
+    </button>
+    <button
+      class="mb-5"
+      mat-flat-button
+      color="primary"
+      (click)="toggleTaskForm()"
+    >
+      Salir
+    </button>
     <button type="reset" mat-stroked-button color="warn">Eliminar</button>
   </form>
 </div>
