@@ -20,7 +20,7 @@
 
       <task-card
         [title]="'➕ Añadir tarea nueva...'"
-        (click)="startEmptyTaskEdit()"
+        (click)="addNewEmptyTaskOfType()"
       >
       </task-card>
     </div>
@@ -36,13 +36,13 @@
     <mat-form-field appearance="fill">
       <mat-label>Titulo</mat-label>
 
-      <input matInput formControlName="title" />
+      <input matInput formControlName="title"/>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Lista</mat-label>
 
-      <input matInput formControlName="taskType" [matAutocomplete]="auto" />
+      <input matInput formControlName="taskType" [matAutocomplete]="auto"/>
 
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let taskType of taskTypes" [value]="taskType">
@@ -54,14 +54,27 @@
     <mat-form-field appearance="fill">
       <mat-label>Fecha fin</mat-label>
 
-      <input type="date" matInput formControlName="deadline" />
+      <input type="date" matInput formControlName="deadline" [matDatepicker]="picker" />
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>URL Imagen</mat-label>
 
-      <input matInput formControlName="headerImage" />
+      <input matInput formControlName="headerImage"/>
     </mat-form-field>
+
+    <label class="mb-5">
+      <button type="button" (click)="addNewUserToCurrentTask()">
+        <mat-icon fontIcon="add"></mat-icon>
+      </button>
+
+      <div class="grid grid-cols-4 gap-4 place-items-stretch">
+        <img *ngFor="let user of taskFormGroup.value.users"
+             [src]="user.img" [alt]="user.alt" [matTooltip]="user.alt" />
+      </div>
+    </label>
 
     <button class="mb-10" type="submit" mat-flat-button color="accent">
       Guardar

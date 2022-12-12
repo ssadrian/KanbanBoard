@@ -1,9 +1,9 @@
-import { Component } from "@angular/core";
-import { FormBuilder } from '@angular/forms'
+import {Component} from "@angular/core";
+import {FormBuilder, FormControl} from "@angular/forms"
 
-import { ITask } from "./models/task/itask";
-import { TaskType } from "./models/task-type/task-type";
-import { IUser } from "./models/user/user";
+import {ITask} from "./models/task/itask";
+import {TaskType} from "./models/task-type/task-type";
+import {IUser} from "./models/user/user";
 
 @Component({
   selector: "app-root",
@@ -22,12 +22,12 @@ export class AppComponent {
   tasks: ITask[];
 
   showTaskForm?: boolean;
-  taskFormGroup = this.fb.group({
-    title: [""],
-    taskType: [TaskType.TODO],
-    deadline: [new Date()],
-    headerImage: ["https://lorempicsum.com/300/200"],
-    users: []
+  taskFormGroup = this.fb.nonNullable.group({
+    title: "",
+    taskType: new FormControl<TaskType>(TaskType.TODO),
+    deadline: new FormControl(new Date()),
+    headerImage: "https://lorempicsum.com/300/200",
+    users: new FormControl(Array.of<IUser>())
   });
 
   constructor(private fb: FormBuilder) {
@@ -119,13 +119,19 @@ export class AppComponent {
     this.showTaskForm = !this.showTaskForm;
   }
 
-  addNewUserToTask(task: ITask): void {
-    task.usuarios.push({
+  addNewUserToCurrentTask(): void {
+    let newUser: IUser = {
       img: "https://picsum.photos/200/300",
-      alt: "",
+      alt: "User",
       email: "",
       nick: "",
-    });
+    };
+
+    if (this.taskFormGroup.value.users === undefined || this.taskFormGroup.value.users === null) {
+      this.taskFormGroup.value.users = Array.of<IUser>();
+    }
+
+    this.taskFormGroup.value.users.push(newUser);
   }
 
   removeUserFromTask(userToRemove: IUser, task: ITask): void {
@@ -139,7 +145,7 @@ export class AppComponent {
     }
   }
 
-  startTaskEdit(task: ITask) {
+  startTaskEdit(task: ITask): void {
     this.toggleTaskForm();
     this.taskFormGroup.patchValue({
       title: task.titulo,
@@ -149,12 +155,12 @@ export class AppComponent {
     });
   }
 
-  startEmptyTaskEdit() {
+  addNewEmptyTaskOfType(): void {
     this.toggleTaskForm();
     this.taskFormGroup.reset();
   }
 
-  saveNewTask() {
+  saveNewTask(): void {
     this.toggleTaskForm();
     this.tasks.push({
       id: 0,
@@ -164,7 +170,5 @@ export class AppComponent {
       fechaFin: this.taskFormGroup.value.deadline!,
       usuarios: this.taskFormGroup.value.users!
     });
-
-    console.log(this.tasks.pop());
   }
 }

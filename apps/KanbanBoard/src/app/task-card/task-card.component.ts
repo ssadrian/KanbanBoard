@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 
-import { ITask } from "../models/task/itask"
-import { IUser } from "../models/user/user";
-import { TaskType } from "../models/task-type/task-type";
-import { DeadlineType } from "../models/deadline-type";
+import {ITask} from "../models/task/itask"
+import {IUser} from "../models/user/user";
+import {TaskType} from "../models/task-type/task-type";
+import {DeadlineType} from "../models/deadline-type";
 
 @Component({
   selector: "task-card",
@@ -40,11 +40,10 @@ export class TaskCardComponent implements OnInit {
     let isDeadlineExceeded: boolean = daysUntilDeadline <= 0;
     let isTaskInFinishedBoard: boolean = this.taskType == TaskType.FINALIZED;
 
-    let isOneDayLeftUntilDeadline: boolean =
-      this.deadline?.getDay() == new Date().getDay() + 1;
+    let isOneDayLeftUntilDeadline: boolean = daysUntilDeadline == 1;
 
-    if (isTaskInFinishedBoard) {
-      if (isDeadlineExceeded) {
+    if (isDeadlineExceeded) {
+      if (isTaskInFinishedBoard) {
         this.deadlineType = DeadlineType.FINISHED;
       } else {
         this.deadlineType = DeadlineType.MISSED;
