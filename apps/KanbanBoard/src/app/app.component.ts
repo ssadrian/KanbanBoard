@@ -123,8 +123,8 @@ export class AppComponent {
     let newUser: IUser = {
       img: "https://picsum.photos/200/300",
       alt: "User",
-      email: "",
-      nick: "",
+      email: `${this.#getStringRandomNumber()}@${this.#getStringRandomNumber()}.com`,
+      nick: this.#getStringRandomNumber(),
     };
 
     if (this.taskFormGroup.value.users === undefined || this.taskFormGroup.value.users === null) {
@@ -134,15 +134,8 @@ export class AppComponent {
     this.taskFormGroup.value.users.push(newUser);
   }
 
-  removeUserFromTask(userToRemove: IUser, task: ITask): void {
-    for (let user of task.usuarios) {
-      if (
-        user.nick === userToRemove.nick &&
-        user.email === userToRemove.email
-      ) {
-        task.usuarios.splice(task.usuarios.indexOf(user), 1);
-      }
-    }
+  removeUserFromTaskAtIndex(index: number): void {
+    this.taskFormGroup.value.users!.splice(index, 1);
   }
 
   startTaskEdit(task: ITask): void {
@@ -162,13 +155,19 @@ export class AppComponent {
 
   saveNewTask(): void {
     this.toggleTaskForm();
+    let usedIds: number[] = this.tasks.map((x: ITask) => x.id).sort();
+
     this.tasks.push({
-      id: 0,
+      id: usedIds[usedIds.length] + 1,
       titulo: this.taskFormGroup.value.title!,
       lista: this.taskFormGroup.value.taskType!,
       img: this.taskFormGroup.value.headerImage!,
       fechaFin: this.taskFormGroup.value.deadline!,
       usuarios: this.taskFormGroup.value.users!
     });
+  }
+
+  #getStringRandomNumber(): string {
+    return Math.round(Math.random() * 1000 + 1).toString();
   }
 }
