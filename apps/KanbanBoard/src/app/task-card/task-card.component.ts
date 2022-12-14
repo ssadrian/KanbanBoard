@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 
-import { ITask } from "../models/task/itask";
-import { IUser } from "../models/user/user";
-import { TaskType } from "../models/task-type/task-type";
+import { ITask } from "../models/itask";
+import { IUser } from "../models/iuser";
+import { TaskType } from "../models/task-type";
 import { DeadlineType } from "../models/deadline-type";
 
 @Component({
@@ -41,14 +41,12 @@ export class TaskCardComponent implements OnInit {
     let isTaskInFinishedBoard: boolean = this.taskType == TaskType.FINALIZED;
     let isOneDayLeftUntilDeadline: boolean = daysUntilDeadline == 1;
 
-    if (isDeadlineExceeded) {
-      if (isTaskInFinishedBoard) {
-        this.deadlineType = DeadlineType.FINISHED;
-      } else {
-        this.deadlineType = DeadlineType.MISSED;
-      }
+    if (isDeadlineExceeded && !isTaskInFinishedBoard) {
+      this.deadlineType = DeadlineType.MISSED;
     } else if (isOneDayLeftUntilDeadline) {
       this.deadlineType = DeadlineType.CLOSE_BY;
+    } else if (isTaskInFinishedBoard) {
+      this.deadlineType = DeadlineType.FINISHED;
     }
   }
 
@@ -58,7 +56,7 @@ export class TaskCardComponent implements OnInit {
     }
 
     let today: Date = new Date();
-    let leftDays: number = Math.round(
+    let leftDays: number = Math.ceil(
       (this.deadline.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
     );
 
