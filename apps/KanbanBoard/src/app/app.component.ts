@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {FormBuilder, FormControl} from "@angular/forms"
+import {FormBuilder, FormControl} from "@angular/forms";
 
 import {ITask} from "./models/task/itask";
 import {TaskType} from "./models/task-type/task-type";
@@ -23,18 +23,19 @@ export class AppComponent {
 
   showTaskForm?: boolean;
   taskFormGroup = this.fb.nonNullable.group({
+    id: [0],
     title: "",
     taskType: new FormControl<TaskType>(TaskType.TODO),
     deadline: new FormControl(new Date()),
     headerImage: "https://lorempicsum.com/300/200",
-    users: new FormControl(Array.of<IUser>())
+    users: new FormControl(Array.of<IUser>()),
   });
 
   constructor(private fb: FormBuilder) {
     const tareasJSON: string = `{
       "tareas": [{
         "id": 0,
-        "lista": "${this.k_FINALIZADAS_LISTA}",
+        "lista": "${ this.k_FINALIZADAS_LISTA }",
         "img": "https://picsum.photos/300/200",
         "titulo": "Tarea 1: Diseño UI",
         "usuarios": [{
@@ -47,7 +48,7 @@ export class AppComponent {
       },
       {
         "id": 1,
-        "lista": "${this.k_PROGRESO_LISTA}",
+        "lista": "${ this.k_PROGRESO_LISTA }",
         "img": "https://picsum.photos/300/200",
         "titulo": "Tarea 2: Diseño de todo el Backend",
         "usuarios": [],
@@ -55,7 +56,7 @@ export class AppComponent {
       },
       {
         "id": 2,
-        "lista": "${this.k_PENDIENTES_LISTA}",
+        "lista": "${ this.k_PENDIENTES_LISTA }",
         "img": null,
         "titulo": "Tarea 3: Diseño de la base de datos",
         "usuarios":
@@ -77,7 +78,7 @@ export class AppComponent {
       },
       {
         "id": 3,
-        "lista": "${this.k_PENDIENTES_LISTA}",
+        "lista": "${ this.k_PENDIENTES_LISTA }",
         "img": null,
         "titulo": "Tarea 4: Implementar todo el Front-End",
         "usuarios": [],
@@ -99,6 +100,8 @@ export class AppComponent {
     this.taskTypes.push(TaskType.TODO);
     this.taskTypes.push(TaskType.IN_PROGRESS);
     this.taskTypes.push(TaskType.FINALIZED);
+
+    this.taskFormGroup.value.id = this.tasks.length + 1;
   }
 
   getTasksOfType(taskType: TaskType): ITask[] {
@@ -119,17 +122,17 @@ export class AppComponent {
     this.showTaskForm = !this.showTaskForm;
   }
 
-  addNewUserToCurrentTask(): void {
-    let newUser: IUser = {
-      img: "https://picsum.photos/200/300",
-      alt: "User",
-      email: `${this.#getStringRandomNumber()}@${this.#getStringRandomNumber()}.com`,
-      nick: this.#getStringRandomNumber(),
-    };
-
+  addNewUserToTask(): void {
     if (this.taskFormGroup.value.users === undefined || this.taskFormGroup.value.users === null) {
       this.taskFormGroup.value.users = Array.of<IUser>();
     }
+
+    let newUser: IUser = {
+      img: "https://picsum.photos/200/300",
+      alt: "User",
+      email: `${ this.#getStringRandomNumber() }@${ this.#getStringRandomNumber() }.com`,
+      nick: this.#getStringRandomNumber(),
+    };
 
     this.taskFormGroup.value.users.push(newUser);
   }
@@ -141,30 +144,61 @@ export class AppComponent {
   startTaskEdit(task: ITask): void {
     this.toggleTaskForm();
     this.taskFormGroup.patchValue({
+      id: task.id,
       title: task.titulo,
       taskType: task.lista,
       deadline: task.fechaFin,
-      headerImage: task.img
+      headerImage: task.img,
+      users: task.usuarios,
     });
   }
 
-  addNewEmptyTaskOfType(): void {
+  addNewEmptyTaskOfType(taskType: TaskType): void {
     this.toggleTaskForm();
-    this.taskFormGroup.reset();
+    this.taskFormGroup.patchValue({
+      id: this.tasks.length + 1,
+      title: "",
+      taskType: taskType,
+      deadline: new Date(),
+      headerImage: "https://lorempicsum.com/200/300",
+      users: <IUser[]>{},
+    });
   }
 
-  saveNewTask(): void {
+  taskFormSubmit(): void {
     this.toggleTaskForm();
-    let usedIds: number[] = this.tasks.map((x: ITask) => x.id).sort();
+    let form = this.taskFormGroup.value;
 
-    this.tasks.push({
-      id: usedIds[usedIds.length] + 1,
-      titulo: this.taskFormGroup.value.title!,
-      lista: this.taskFormGroup.value.taskType!,
-      img: this.taskFormGroup.value.headerImage!,
-      fechaFin: this.taskFormGroup.value.deadline!,
-      usuarios: this.taskFormGroup.value.users!
-    });
+    let currentTaskId: number = form.id!;
+    let possibleNewTaskId: number = this.tasks.length + 1;
+    let shouldSaveNewTask: boolean = currentTaskId === possibleNewTaskId;
+
+    let taskToUpdateOrCreate: ITask = {
+      id: currentTaskId,
+      titulo: form.title!,
+      lista: form.taskType!,
+      fechaFin: form.deadline!,
+      img: form.headerImage!,
+      usuarios: form.users!,
+    };
+
+    if (shouldSaveNewTask) {
+      taskToUpdateOrCreate.id = possibleNewTaskId;
+      this.tasks.push(taskToUpdateOrCreate);
+
+      return;
+    }
+
+    this.updateTaskWithId(currentTaskId, taskToUpdateOrCreate);
+  }
+
+  updateTaskWithId(id: number, newTaskValues: ITask): void {
+    let taskToUpdate: ITask = this.tasks.find(task => task.id == id)!;
+
+    taskToUpdate.titulo = newTaskValues.titulo!;
+    taskToUpdate.lista = newTaskValues.lista!;
+    taskToUpdate.img = newTaskValues.img!;
+    taskToUpdate.usuarios = newTaskValues.usuarios!;
   }
 
   #getStringRandomNumber(): string {

@@ -20,7 +20,7 @@
 
       <task-card
         [title]="'➕ Añadir tarea nueva...'"
-        (click)="addNewEmptyTaskOfType()"
+        (click)="addNewEmptyTaskOfType(taskType)"
       >
       </task-card>
     </div>
@@ -31,18 +31,18 @@
   <form
     class="flex flex-col w-1/2 relative left-1/4 top-1/4"
     [formGroup]="taskFormGroup"
-    (ngSubmit)="saveNewTask()"
+    (ngSubmit)="taskFormSubmit()"
   >
     <mat-form-field appearance="fill">
       <mat-label>Titulo</mat-label>
 
-      <input matInput formControlName="title"/>
+      <input matInput formControlName="title" />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Lista</mat-label>
 
-      <input matInput formControlName="taskType" [matAutocomplete]="auto"/>
+      <input matInput formControlName="taskType" [matAutocomplete]="auto" />
 
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let taskType of taskTypes" [value]="taskType">
@@ -62,11 +62,11 @@
     <mat-form-field appearance="fill">
       <mat-label>URL Imagen</mat-label>
 
-      <input matInput formControlName="headerImage"/>
+      <input matInput formControlName="headerImage" />
     </mat-form-field>
 
     <div class="flex flex-col gap-4 mb-4">
-      <button mat-flat-button class="w-full p-2" type="button" (click)="addNewUserToCurrentTask()">
+      <button mat-flat-button class="w-full p-2" type="button" (click)="addNewUserToTask()">
         <mat-icon fontIcon="person_add"></mat-icon>
       </button>
 
