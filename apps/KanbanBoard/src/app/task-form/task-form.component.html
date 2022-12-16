@@ -1,66 +1,70 @@
-<div class="h-full task-form-container">
-  <p [innerText]="taskFormGroup.value | json"></p>
+<form
+  class="flex flex-col w-1/2 relative left-1/4 top-1/4 px-4 py-2 shadow-2xl rounded-xl"
+  [formGroup]="taskFormGroup"
+  (ngSubmit)="taskFormSubmit()"
+>
+  <mat-form-field appearance="fill">
+    <mat-label>Titulo</mat-label>
 
-  <form
-    class="flex flex-col w-1/2 relative left-1/4 top-1/4"
-    [formGroup]="taskFormGroup"
-    (ngSubmit)="taskFormSubmit()"
-  >
-    <mat-form-field appearance="fill">
-      <mat-label>Titulo</mat-label>
+    <input matInput formControlName="title"/>
+  </mat-form-field>
 
-      <input matInput formControlName="title" />
-    </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Lista</mat-label>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Lista</mat-label>
+    <input matInput formControlName="taskType" [matAutocomplete]="auto"/>
 
-      <input matInput formControlName="taskType" [matAutocomplete]="auto" />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let taskType of taskTypes" [value]="taskType">
+        {{ taskType }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let taskType of taskTypes" [value]="taskType">
-          {{ taskType }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Fecha fin</mat-label>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Fecha fin</mat-label>
+    <input matInput formControlName="deadline" [matDatepicker]="picker" readonly />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 
-      <input type="date" matInput formControlName="deadline" [matDatepicker]="picker" />
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>URL Imagen</mat-label>
 
-    <mat-form-field appearance="fill">
-      <mat-label>URL Imagen</mat-label>
+    <input matInput formControlName="headerImage"/>
+  </mat-form-field>
 
-      <input matInput formControlName="headerImage" />
-    </mat-form-field>
+  <div class="flex flex-col gap-4 mb-4">
+    <button mat-flat-button class="w-full p-2" type="button"
+            (click)="addNewUserToTask()"
+            [disabled]="taskFormGroup.get('users')?.value?.length! >= 2">
+      <mat-icon fontIcon="person_add"></mat-icon>
+    </button>
 
-    <div class="flex flex-col gap-4 mb-4">
-      <button mat-flat-button class="w-full p-2" type="button" (click)="addNewUserToTask()">
-        <mat-icon fontIcon="person_add"></mat-icon>
-      </button>
-
-      <div class="grid grid-cols-4 gap-4 place-items-stretch">
-        <img *ngFor="let user of taskFormGroup.value.users; index as i"
-             [src]="user.img" [alt]="user.alt" [matTooltip]="user.alt + ' - ' + user.nick"
-             (click)="removeUserFromTaskAtIndex(i)" />
-      </div>
+    <div class="grid grid-cols-4 gap-4 place-items-stretch">
+      <img *ngFor="let user of taskFormGroup.value.users; index as i"
+           [src]="user.img" [alt]="user.alt" [matTooltip]="user.alt + ' - ' + user.nick"
+           (click)="removeUserFromTaskAtIndex(i)"/>
     </div>
+  </div>
 
-    <button class="mb-10" type="submit" mat-flat-button color="accent">
-      Guardar
-    </button>
-    <button
-      type="button"
-      class="mb-5"
-      mat-flat-button
-      color="primary"
-      (click)="exitForm()"
-    >
-      Salir
-    </button>
-  </form>
-</div>
+  <button class="mb-4" type="submit" mat-flat-button color="accent">
+    Guardar
+  </button>
+
+  <button class="mb-10" type="button" mat-stroked-button color="warn" (click)="resetForm()">
+    Destacar cambios
+  </button>
+
+  <button
+    type="button"
+    class="mb-5"
+    mat-flat-button
+    color="primary"
+    (click)="exitForm()"
+  >
+    Salir
+  </button>
+</form>
