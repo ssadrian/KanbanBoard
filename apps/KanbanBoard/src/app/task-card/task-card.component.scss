@@ -1,0 +1,97 @@
+$red: #EE005F;
+$green: #00EA71;
+$orange: #FFA953;
+$light-grey: #9A97A9;
+$beige: #FFEDCB;
+$underline-rgba: rgba(30, 30, 30, .75);
+
+.task-finished-uncompleted {
+  background-color: $red;
+}
+
+.task-finished-completed {
+  background-color: $green;
+}
+
+.task-close-by-uncompleted {
+  background-color: $orange;
+}
+
+.task-default {
+  background-color: $light-grey;
+}
+
+.task {
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background-color: $beige;
+  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow);
+
+  .task-header-image {
+    margin: -1.25rem -1.25rem 0;
+    height: 3.5rem;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+  }
+
+  .title {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .task-footer {
+    display: flex;
+    justify-content: space-between;
+
+    .deadline {
+      display: flex;
+      gap: 0.25rem;
+      padding: 0.375rem;
+      border-radius: 0.375rem;
+
+      .date {
+        align-self: center;
+      }
+    }
+
+    .assigned-users {
+      display: flex;
+      justify-content: flex-end;
+      height: 2rem;
+      gap: 1rem;
+
+      .user-img {
+        border-radius: 9999px;
+      }
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    & ~ .glow {
+      animation: underline 550ms ease-out forwards;
+    }
+  }
+}
+
+.glow {
+  background-color: $underline-rgba;
+  position: relative;
+  bottom: 0.625rem;
+  width: 0;
+  height: 0.625rem;
+  border-bottom-right-radius: 0.75rem;
+  border-bottom-left-radius: 0.75rem;
+}
+
+@keyframes underline {
+  100% {
+    width: 100%;
+  }
+}

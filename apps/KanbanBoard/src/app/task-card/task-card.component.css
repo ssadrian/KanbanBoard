@@ -1,38 +1,77 @@
-:host {
-  --red: #EE005F;
-  --green: #00EA71;
-  --orange: #FFA953;
-  --light-grey: #9A97A9;
-  --beige: #FFEDCB;
-  --underline-rgba: rgba(30, 30, 30, .75);
-}
-
 .task-finished-uncompleted {
-  @apply bg-[var(--red)];
+  background-color: #EE005F;
 }
 
 .task-finished-completed {
-  @apply bg-[var(--green)];
+  background-color: #00EA71;
 }
 
 .task-close-by-uncompleted {
-  @apply bg-[var(--orange)];
+  background-color: #FFA953;
 }
 
 .task-default {
-  @apply bg-[var(--light-grey)];
+  background-color: #9A97A9;
 }
 
 .task {
-  @apply bg-[var(--beige)];
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background-color: #FFEDCB;
+  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0, 0, 0, 0)), var(--tw-ring-shadow), var(--tw-shadow);
+}
+.task .task-header-image {
+  margin: -1.25rem -1.25rem 0;
+  height: 3.5rem;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+.task .title {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+.task .task-footer {
+  display: flex;
+  justify-content: space-between;
+}
+.task .task-footer .deadline {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.375rem;
+  border-radius: 0.375rem;
+}
+.task .task-footer .deadline .date {
+  align-self: center;
+}
+.task .task-footer .assigned-users {
+  display: flex;
+  justify-content: flex-end;
+  height: 2rem;
+  gap: 1rem;
+}
+.task .task-footer .assigned-users .user-img {
+  border-radius: 9999px;
+}
+.task:hover {
+  cursor: pointer;
+}
+.task:hover ~ .glow {
+  animation: underline 550ms ease-out forwards;
 }
 
 .glow {
-  @apply bg-[var(--underline-rgba)];
-}
-
-.task:hover ~ .glow {
-  animation: underline 550ms ease-out forwards;
+  background-color: rgba(30, 30, 30, 0.75);
+  position: relative;
+  bottom: 0.625rem;
+  width: 0;
+  height: 0.625rem;
+  border-bottom-right-radius: 0.75rem;
+  border-bottom-left-radius: 0.75rem;
 }
 
 @keyframes underline {
@@ -40,3 +79,5 @@
     width: 100%;
   }
 }
+
+/*# sourceMappingURL=task-card.component.css.map */

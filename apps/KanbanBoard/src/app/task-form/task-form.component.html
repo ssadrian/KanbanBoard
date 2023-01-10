@@ -1,8 +1,4 @@
-<form
-  class="flex flex-col w-1/2 relative left-1/4 top-1/4 px-4 py-2 shadow-2xl rounded-xl"
-  [formGroup]="taskFormGroup"
-  (ngSubmit)="taskFormSubmit()"
->
+<form class="task-form" [formGroup]="taskFormGroup" (ngSubmit)="taskFormSubmit()">
   <mat-form-field appearance="fill">
     <mat-label>Titulo</mat-label>
 
@@ -24,7 +20,7 @@
   <mat-form-field appearance="fill">
     <mat-label>Fecha fin</mat-label>
 
-    <input matInput formControlName="deadline" [matDatepicker]="picker" readonly />
+    <input matInput formControlName="deadline" [matDatepicker]="picker" readonly/>
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
@@ -36,31 +32,31 @@
     <input matInput formControlName="headerImage"/>
   </mat-form-field>
 
-  <div class="flex flex-col gap-4 mb-4">
-    <button mat-flat-button class="w-full p-2" type="button"
+  <div class="user-group">
+    <button mat-flat-button class="btn-add-user" type="button"
             (click)="addNewUserToTask()"
             [disabled]="taskFormGroup.get('users')?.value?.length! >= 2">
       <mat-icon fontIcon="person_add"></mat-icon>
     </button>
 
-    <div class="grid grid-cols-4 gap-4 place-items-stretch">
+    <div class="container-users-group">
       <img *ngFor="let user of taskFormGroup.value.users; index as i"
            [src]="user.img" [alt]="user.alt" [matTooltip]="user.alt + ' - ' + user.nick"
            (click)="removeUserFromTaskAtIndex(i)"/>
     </div>
   </div>
 
-  <button class="mb-4" type="submit" mat-flat-button color="accent">
+  <button class="btn-save" type="submit" mat-flat-button color="accent">
     Guardar
   </button>
 
-  <button class="mb-10" type="button" mat-stroked-button color="warn" (click)="resetForm()">
+  <button class="btn-reset" type="button" mat-stroked-button color="warn" (click)="resetForm()">
     Destacar cambios
   </button>
 
   <button
     type="button"
-    class="mb-5"
+    class="btn-exit"
     mat-flat-button
     color="primary"
     (click)="exitForm()"

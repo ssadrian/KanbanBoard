@@ -1,13 +1,7 @@
-<div class="flex gap-8 m-2 board-container" *ngIf="!showTaskForm">
-  <div
-    class="p-4 flex-1 bg-stone-300 rounded-xl board"
-    *ngFor="let taskType of taskTypes"
-  >
-    <div class="mb-4 board-header">
-      <h1
-        class="text-center font-bold text-4xl board-title"
-        [innerText]="taskType"
-      ></h1>
+<div class="board-container" *ngIf="!showTaskForm">
+  <div class="board" *ngFor="let taskType of taskTypes">
+    <div class="board-header">
+      <h1 class="board-title" [innerText]="taskType"></h1>
     </div>
 
     <div class="board-tasks">

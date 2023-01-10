@@ -1,0 +1,24 @@
+.board-container {
+  display: flex;
+  gap: 2rem;
+  margin: 0.5rem;
+
+  .board {
+    padding: 1rem;
+    flex: 1 1 0;
+    --tw-bg-opacity: 1;
+    background-color: rgb(214 211 209 / var(--tw-bg-opacity));
+    border-radius: 0.75rem;
+
+    .board-header {
+      margin-bottom: 1rem;
+
+      .board-title {
+        text-align: center;
+        font-weight: 700;
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+  }
+}
